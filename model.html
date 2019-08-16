@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title> vue</title>
+		<script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+	</head>
+	<style>
+		.class1{
+			background-color: aqua;
+			font-size: larger;
+		}
+</style>
+	<body>
+		<div id="app">
+			<!-- v-html使用 -->
+			<p v-html="message"></p>
+			<!-- v-model与v-bind使用 -->
+			<span>点击切换颜色</span>
+			<input type="checkbox" v-model="test" />
+			<p v-bind:class="{class1:test}">Test</p>
+			<!-- vue对于js表达式的支持 -->
+			<p>{{10+10}}</p>
+			<p>{{flag==true?"Yes":"No"}}</p>
+			<p>{{name.split('').reverse().join('')}}</p>
+			<!-- v- 标签使用 -->
+			<button v-on:click="a">点击切换</button>
+			<p v-if="seen">you can see me</p>
+			<a v-bind:href="url" v-bind:target="target">百度一下</a>
+			<br />
+			<!-- 双向数据绑定 -->
+			<input type="text" v-model="message1" />
+			<p v-html="message1"></p>
+			<h2>字符串反转</h2>
+			<input type="text" v-model="message2" />
+			<button v-on:click="reverse">点击反转</button>
+			<br />
+			<!-- 过滤器 -->
+			<span>原始数据:</span><input type="text" v-model="message3" />
+			<span>过滤后的数据:</span>
+			<span> {{message3 | format("2131")}} </span>
+		</div>
+	</body>
+	<script>
+		var vue = new Vue({
+			el: "#app",
+			data: {
+				message: "Hello World",
+				test: false,
+				flag: true,
+				name: "Jamin",
+				seen: false,
+				url: "http://www.baidu.com",
+				target: "_blank",
+				message1: "测试",
+				message2: "123",
+				message3: ""
+			},
+			methods: {
+				a: function() {
+					if (this.seen == true) {
+						this.seen = false;
+					} else {
+						this.seen = true;
+					}
+				},
+				reverse: function() {
+					this.message2 = this.message2.split('').reverse().join('');
+				}
+			},
+			filters: {
+				format: function(value, a) {
+					return value.charAt(0).toUpperCase() + value.slice(1) + a;
+				}
+			}
+		})
+	</script>
+
+</html>

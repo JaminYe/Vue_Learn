@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>vue组件</title>
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+	</head>
+	<body>
+		<div id="app">
+			<test></test>
+			<test2></test2>
+			<child message="Hello Vue"></child>
+			<!-- 动态绑定 -->
+			<child v-bind:message="message1"></child>
+			<check1></check1>
+			<br />
+			<p>{{total}}</p>
+			<test3 v-on:increment="incrementTotal"></test3>
+			<br />
+			<test3 v-on:increment="incrementTotal"></test3>
+		</div>
+	</body>`
+	<script>
+		// 全局组件
+		Vue.component("test", {
+			template: "<h1>测试</h1>"
+		});
+		//局部组件
+		var Child = {
+			template: "<h3>测试2</h3>"
+		};
+		Vue.component("child", {
+			//父组件用来传递数据的属性
+			props: ["message"],
+			template: "<h5>{{message}}</h5>"
+		});
+		Vue.component("test3", {
+			template: '<div><button v-on:click="incrementHandler(1)">-</button>{{count}}<button v-on:click="incrementHandler(2)">+</button></div>',
+			data: function() {
+				return {
+					count: 0
+				}
+			},
+			methods: {
+				incrementHandler: function(value) {
+					if (value == 1) {
+						this.count -= 1;
+						this.$emit('increment', value);
+					} else {
+						this.count += 1;
+						this.$emit('increment', value);
+					}
+				}
+			}
+		})
+		//props验证(版本要是开发者版本)
+		Vue.component("check1", {
+			props: {
+				age: {
+					//数据类型
+					type: [Number, Boolean],
+					//必填项
+					required: true,
+					//初始值
+					default: 100,
+
+				}
+			},
+			template: "<h6>测试props验证{{age}}</h6>"
+		})
+		new Vue({
+			el: "#app",
+			components: {
+				"test2": Child
+			},
+			data: {
+				message1: "Hello",
+				total: 0
+			},
+			methods: {
+				incrementTotal: function(value) {
+					if (value == 1) {
+						this.total--;
+					} else {
+						this.total++;
+					}
+				}
+			}
+		});
+		/* prop是单项绑定的,当父组件的值发生变化时会传递到子组件但不会反过来 */
+	</script>
+</html>

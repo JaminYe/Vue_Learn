@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<!-- Hello World -->
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>vue测试</title>
+	</head>
+	<script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+	<body>
+		<div id="app">
+			<p>{{message}}</p>
+			<p> {{test()}} </p>
+		</div>
+		<div id="vue_app">
+		</div>
+	</body>
+	<script>
+		new Vue({
+			el: "#app",
+			data: {
+				message: "Hello World",
+			},
+			methods: {
+				test: function() {
+					return this.message;
+				}
+			}
+		});
+		var data = {
+			message2: "Hello Vue"
+		};
+		var vue = new Vue({
+			el: "#vue_app",
+			data: data
+		});
+		document.write(data.message2 == vue.message2); //true
+		document.write("<br>")
+		document.write(vue.$data == data); //true
+		data.message2 = "HELLO VUE";
+	</script>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Form表单</title>
+		<script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+	</head>
+	<body>
+		<div id="app">
+			<h3>双向输出</h3>
+			<input type="text" v-model="message" />
+			<p> 输入的内容为:{{message}}</p>
+			<br />
+			<h3>单个复选框</h3>
+			<input type="checkbox" id="test" v-model="checked" value="测试" /><label for="test">测试</label>
+			<p>选择为{{checked}}</p>
+			<h3>多个复选框</h3>
+			<span>请选择:</span>
+			<input type="checkbox" id="test1" v-model="check" value="测试1" /><label for="test1">测试1</label>
+			<input type="checkbox" id="test2" v-model="check" value="测试2" /> <label for="test2">测试2</label>
+			<input type="checkbox" id="test3" v-model="check" value="测试3" /><label for="test3">测试3</label>
+			<p>选择为{{check}}</p>
+			<h3>单选框</h3>
+			<input type="radio" v-model="test4" value="测试4" id="test4" /><label for="test4">测试4</label>
+			<input type="radio" v-model="test4" value="测试5" id="test5" /><label for="test5">测试5</label>
+			<p>选择为{{test4}}</p>
+			<h3>下拉框</h3>
+			<select v-model="select">
+				<option value="测试1">1</option>
+				<option value="测试2">2</option>
+			</select>
+			<p>你的选择为{{select}}</p>
+			<h3>全选 1</h3>
+			<input type="checkbox" v-model="allChecked" id="allChecked" @change="checkedAll" /><label for="allChecked">全选</label>
+			<span>{{allChecked}}</span>
+			<br />
+			<input type="checkbox" value="Test6" v-model="checkName" id="test6" /><label for="test6">Test6</label>
+			<input type="checkbox" value="Test7" v-model="checkName" id="test7" /><label for="test7">Test7</label>
+			<input type="checkbox" value="Test8" v-model="checkName" id="test8" /><label for="test8">Test8</label>
+			<p>{{checkName}}</p>
+			<h3>全选2</h3>
+			<input type="checkbox" id="checkbox" v-model="checkAll" @change="allchecked" /><label for="checkbox">全选</label>
+			<label v-for="list in checkList"><input type="checkbox" v-model="checkListOn" v-bind:value="list.name" />{{list.name}}</label>
+			<p>{{checkListOn}}</p>
+		</div>
+	</body>
+	<script>
+		var vue = new Vue({
+			el: "#app",
+			data: {
+				message: "测试",
+				check: [],
+				checked: false,
+				test4: "",
+				select: "",
+				checkName: [],
+				checkArray: ["Test6", "Test7", "Test8"],
+				allChecked: false,
+				checkList: [{
+					name: "测试1"
+				}, {
+					name: "测试2"
+				}, {
+					name: "测试3"
+				}],
+				checkListOn: [],
+				checkAll: false
+			},
+			methods: {
+				checkedAll: function() {
+					if (this.allChecked) {
+						this.checkName = this.checkArray;
+					} else {
+						this.checkName = [];
+					}
+				},
+				allchecked: function() {
+					if (this.checkAll) {
+						var checkArray = [];
+						for (var i = 0; i < this.checkList.length; i++) {
+							checkArray.push(this.checkList[i].name);
+						}
+						this.checkListOn = checkArray;
+					} else {
+						this.checkListOn = [];
+					}
+				}
+			},
+			watch: {
+				"checkName": function() {
+					if (this.checkName.length == 3) {
+						this.allChecked = true;
+					} else {
+						this.allChecked = false;
+					}
+				},
+				"checkListOn": function() {
+					if (this.checkListOn.length == this.checkList.length) {
+						this.checkAll = true;
+					} else {
+						this.checkAll = false;
+					}
+				}
+			}
+		})
+	</script>
+</html>

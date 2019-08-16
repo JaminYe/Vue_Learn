@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+		<script src="https://cdn.staticfile.org/vue-router/2.7.0/vue-router.min.js"></script>
+		<title>路由</title>
+		<style>
+			._active {
+				background-color: blue;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<p>
+				<!-- to属性 -->
+				<!-- 字符串 -->
+				<router-link to="foo">Go to Foo1</router-link>
+			</p>
+			<p>
+				<!--  使用v-bind的JS表达式 -->
+				<router-link v-bind:to="'foo'">Go to Foo2</router-link>
+			</p>
+			<p>
+				<!--不写bind -->
+				<router-link :to="'foo'">Go to foo3</router-link>
+			</p>
+			<p>
+				<!--  使用path -->
+				<router-link :to="{path:'foo'}">path</router-link>
+			</p>
+			<p>
+				<!-- 命名路由 -->
+				<router-link :to="{name:'user',params:{userId:123},path:'foo'}">命名路由</router-link>
+			</p>
+			<p>
+				<!-- 带参数查询 "/foo?test=test1"-->
+				<router-link :to="{path:'foo',query:{test:'test1'}}">带参数查询</router-link>
+			</p>
+			<p>
+				<!--  replace-->
+				<router-link :to="{path:'foo'}" replace>replace</router-link>
+			</p>
+			<p>
+				<!-- 在当前路径下追加foo 而不是跳转到foo -->
+				<router-link :to="'foo'" append>append</router-link>
+			</p>
+			<p>
+				<router-link to="foo" tag="li">li标签</router-link>
+			</p>
+			<p>
+				<!-- 激活后的样式 -->
+				<router-link to="foo" active-class="_active">active-class</router-link>
+			</p>
+			<p>
+				<!--  当链接被精准匹配时-->
+				<router-link to="foo" exact-active-class="_active">当链接被精准匹配时</router-link>
+			</p>
+			<!-- active-class与exact-active-class的区别 router-link默认为模糊匹配,
+			当设置<router-link to="foo/1" exact-active-class> 与<router-link to="foo/1" active-class>
+			当用户 点击foo时会触发active-class而不会触发exact-active-class
+			-->
+			<p>
+				<!-- event事件 -->
+				<router-link to="foo" event="mouseover">事件-当鼠标移动到这里时</router-link>
+			</p>
+			<p>
+				<router-link to="/bar">Go to Bar</router-link>
+			</p>
+			<router-view></router-view>
+		</div>
+	</body>
+	<script>
+		//  定义路由组件
+		const Foo = {
+			template: '<div>foo</div>'
+		}
+		const Bar = {
+			template: '<div>bar</div>'
+		};
+		//定义路由
+		const routes = [{
+				path: '/foo',
+				component: Foo
+			},
+			{
+				path: '/bar',
+				component: Bar
+			}
+		]
+		//创建路由实例,然后传路由的配置
+		const router = new VueRouter({
+			routes
+		});
+		//创建和挂载根实例
+		const app = new Vue({
+			router
+		}).$mount("#app");
+	</script>
+</html>

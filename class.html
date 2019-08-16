@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title> 样式绑定</title>
+		<script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+		<style>
+			.bg {
+				background-color: blue;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<p v-bind:class="{bg:active}">{{message}}</p>
+		</div>
+	</body>
+	<script>
+		new Vue({
+			el: "#app",
+			data: {
+				active: true,
+				message: "Hello Vue"
+			}
+		})
+	</script>
+</html>
