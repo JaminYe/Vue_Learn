@@ -3,8 +3,59 @@
 	<head>
 		<meta charset="utf-8">
 		<script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
-		<title></title>
+		<link href="https://cdn.jsdelivr.net/npm/animate.css@3.5.1" rel="stylesheet" type="text/css" />
+		<title>动画实例</title>
+		<style>
+			.fade-enter-active,.fade-leave-active{
+			transition: opacity 2s
+		}
+		.fade-enter,.fade-leave-to{
+			opacity: 0
+		}
+		.test-enter-active{
+			animation:test-in .5s;
+			}
+		.test-leave-active{
+				animation: test-in .5s reverse;
+			}
+			@keyframes test-in{
+				0%{
+					transform: scale(0);
+				}
+				50%{
+					transform: scale(1.5);
+				}
+				100%{
+					transform: scale(1);
+				}
+			}
+		</style>
 	</head>
 	<body>
+		<div id="app">
+			<input type="button" v-on:click="show=!show" value="点击" />
+			<transition name=" fade">
+				<p v-show="show" v-bind:style="styleobj">{{message}}</p>
+			</transition>
+			<transition name="test">
+				<p v-show="show">菜鸟教程 -- 学的不仅是技术，更是梦想！！！</p>
+			</transition>
+			<transition name="test1" enter-active-class="animated tada" leave-active-class="animated bounceOutRight">
+				<p v-show="show">测试1-测试2-测试3</p>
+			</transition>
+		</div>
 	</body>
+	<script>
+		new Vue({
+			el: "#app",
+			data: {
+				message: "动画实例",
+				show: true,
+				styleobj: {
+					color: 'red',
+					fontsize: '30px'
+				}
+			}
+		})
+	</script>
 </html>
